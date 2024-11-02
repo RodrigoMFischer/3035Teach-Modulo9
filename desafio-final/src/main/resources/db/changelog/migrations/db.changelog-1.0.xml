@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+        <changeSet id="1" author="rodrigo.fischer">
+            <sql dbms="postgresql">
+                CREATE TABLE USERS (
+                     user_id         SERIAL NOT NULL PRIMARY KEY,
+                     name            VARCHAR(255) NOT NULL,
+                     username        VARCHAR(255) NOT NULL UNIQUE,
+                     phone           CHAR(11),
+                     email           VARCHAR(255) NOT NULL UNIQUE,
+                     password        VARCHAR(512) NOT NULL,
+                     description     VARCHAR(255) NOT NULL,
+                     profile_link    VARCHAR(512) NOT NULL,
+                     deleted         BOOLEAN NOT NULL,
+                     created_at      DATE NOT NULL,
+                     updated_at      DATE
+                );
+            </sql>
+        </changeSet>
+
+    <changeSet id="2" author="rodrigo.fischer">
+        <sql dbms="postgresql">
+            CREATE TABLE POSTS (
+                 post_id         SERIAL NOT NULL PRIMARY KEY,
+                 user_id         INTEGER NOT NULL,
+                 title           VARCHAR(50) NOT NULL,
+                 description     VARCHAR(200) NOT NULL,
+                 photo_link      VARCHAR(512),
+                 video_link      VARCHAR(512),
+                 private         BOOLEAN NOT NULL,
+                 created_at      DATE NOT NULL,
+                 updated_at      DATE,
+                 FOREIGN KEY (user_id) REFERENCES USERS(user_id)
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet id="3" author="rodrigo.fischer">
+        <sql dbms="postgresql">
+            INSERT INTO USERS (name, username, phone, email, password, description, profile_link, deleted, created_at, updated_at)
+            VALUES
+                ('Alice Johnson', 'alicejohnson', '51995955656', 'alice.johnson@example.com', '$2a$10$3U7P/amb2HZrrfhqljoBCeIx6EyN7AqlBy0cbjydP.eXYcmoT1Xbi', 'Software Engineer with 6 years of experience.', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKo6EQGkW1RVzpZrawB05Gq0srUxkynU6yP7IOvct1zNQHgu1iIUYIJKhwwq_ECaZ2aRo&amp;usqp=CAU', FALSE, CURRENT_DATE, CURRENT_DATE),
+                ('Bob Smith', 'bobsmith', '51995955656', 'bob.smith@example.com', '$2a$10$3U7P/amb2HZrrfhqljoBCeIx6EyN7AqlBy0cbjydP.eXYcmoT1Xbi', 'Front-end Developer with 4 years of experience.', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKo6EQGkW1RVzpZrawB05Gq0srUxkynU6yP7IOvct1zNQHgu1iIUYIJKhwwq_ECaZ2aRo&amp;usqp=CAU', FALSE, CURRENT_DATE, CURRENT_DATE),
+                ('Carol Williams', 'carolwilliams', '51995955656', 'carol.williams@example.com', '$2a$10$3U7P/amb2HZrrfhqljoBCeIx6EyN7AqlBy0cbjydP.eXYcmoT1Xbi', 'Data Scientist with 5 years of experience.', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKo6EQGkW1RVzpZrawB05Gq0srUxkynU6yP7IOvct1zNQHgu1iIUYIJKhwwq_ECaZ2aRo&amp;usqp=CAU', FALSE, CURRENT_DATE, CURRENT_DATE),
+                ('David Brown', 'davidbrown', '51995955656', 'david.brown@example.com', '$2a$10$3U7P/amb2HZrrfhqljoBCeIx6EyN7AqlBy0cbjydP.eXYcmoT1Xbi', 'Full Stack Developer with 3 years of experience.', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKo6EQGkW1RVzpZrawB05Gq0srUxkynU6yP7IOvct1zNQHgu1iIUYIJKhwwq_ECaZ2aRo&amp;usqp=CAU', FALSE, CURRENT_DATE, CURRENT_DATE),
+                ('Eva Green', 'evagreen', '51995955656', 'eva.green@example.com', '$2a$10$3U7P/amb2HZrrfhqljoBCeIx6EyN7AqlBy0cbjydP.eXYcmoT1Xbi', 'UI/UX Designer with 2 years of experience.', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKo6EQGkW1RVzpZrawB05Gq0srUxkynU6yP7IOvct1zNQHgu1iIUYIJKhwwq_ECaZ2aRo&amp;usqp=CAU', FALSE, CURRENT_DATE, CURRENT_DATE),
+                ('Frank Harris', 'frankharris', '51995955656', 'frank.harris@example.com', '$2a$10$3U7P/amb2HZrrfhqljoBCeIx6EyN7AqlBy0cbjydP.eXYcmoT1Xbi', 'DevOps Engineer with 4 years of experience.', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKo6EQGkW1RVzpZrawB05Gq0srUxkynU6yP7IOvct1zNQHgu1iIUYIJKhwwq_ECaZ2aRo&amp;usqp=CAU', FALSE, CURRENT_DATE, CURRENT_DATE),
+                ('Grace Lee', 'gracelee', '51995955656', 'grace.lee@example.com', '$2a$10$3U7P/amb2HZrrfhqljoBCeIx6EyN7AqlBy0cbjydP.eXYcmoT1Xbi', 'Systems Analyst with 3 years of experience.', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKo6EQGkW1RVzpZrawB05Gq0srUxkynU6yP7IOvct1zNQHgu1iIUYIJKhwwq_ECaZ2aRo&amp;usqp=CAU', FALSE, CURRENT_DATE, CURRENT_DATE),
+                ('Henry King', 'henryking', '51995955656', 'henry.king@example.com', '$2a$10$3U7P/amb2HZrrfhqljoBCeIx6EyN7AqlBy0cbjydP.eXYcmoT1Xbi', 'Network Engineer with 5 years of experience.', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKo6EQGkW1RVzpZrawB05Gq0srUxkynU6yP7IOvct1zNQHgu1iIUYIJKhwwq_ECaZ2aRo&amp;usqp=CAU', FALSE, CURRENT_DATE, CURRENT_DATE),
+                ('Irene Taylor', 'irenetaylor', '51995955656', 'irene.taylor@example.com', '$2a$10$3U7P/amb2HZrrfhqljoBCeIx6EyN7AqlBy0cbjydP.eXYcmoT1Xbi', 'Product Manager with 6 years of experience.', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKo6EQGkW1RVzpZrawB05Gq0srUxkynU6yP7IOvct1zNQHgu1iIUYIJKhwwq_ECaZ2aRo&amp;usqp=CAU', FALSE, CURRENT_DATE, CURRENT_DATE),
+                ('Jack Wilson', 'jackwilson', '51995955656', 'jack.wilson@example.com', '$2a$10$3U7P/amb2HZrrfhqljoBCeIx6EyN7AqlBy0cbjydP.eXYcmoT1Xbi', 'Technical Writer with 2 years of experience.', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKo6EQGkW1RVzpZrawB05Gq0srUxkynU6yP7IOvct1zNQHgu1iIUYIJKhwwq_ECaZ2aRo&amp;usqp=CAU', FALSE, CURRENT_DATE, CURRENT_DATE),
+                ('Karen Scott', 'karenscott', '51995955656', 'karen.scott@example.com', '$2a$10$3U7P/amb2HZrrfhqljoBCeIx6EyN7AqlBy0cbjydP.eXYcmoT1Xbi', 'Database Administrator with 4 years of experience.', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKo6EQGkW1RVzpZrawB05Gq0srUxkynU6yP7IOvct1zNQHgu1iIUYIJKhwwq_ECaZ2aRo&amp;usqp=CAU', FALSE, CURRENT_DATE, CURRENT_DATE),
+                ('Leo Adams', 'leoadams', '51995955656', 'leo.adams@example.com', '$2a$10$3U7P/amb2HZrrfhqljoBCeIx6EyN7AqlBy0cbjydP.eXYcmoT1Xbi', 'QA Engineer with 5 years of experience.', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKo6EQGkW1RVzpZrawB05Gq0srUxkynU6yP7IOvct1zNQHgu1iIUYIJKhwwq_ECaZ2aRo&amp;usqp=CAU', FALSE, CURRENT_DATE, CURRENT_DATE),
+                ('Mia Robinson', 'miarobinson', '51995955656', 'mia.robinson@example.com', '$2a$10$3U7P/amb2HZrrfhqljoBCeIx6EyN7AqlBy0cbjydP.eXYcmoT1Xbi', 'Marketing Specialist with 3 years of experience.', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKo6EQGkW1RVzpZrawB05Gq0srUxkynU6yP7IOvct1zNQHgu1iIUYIJKhwwq_ECaZ2aRo&amp;usqp=CAU', FALSE, CURRENT_DATE, CURRENT_DATE),
+                ('Nina Martinez', 'ninamartinez', '51995955656', 'nina.martinez@example.com', '$2a$10$3U7P/amb2HZrrfhqljoBCeIx6EyN7AqlBy0cbjydP.eXYcmoT1Xbi', 'Content Strategist with 4 years of experience.', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKo6EQGkW1RVzpZrawB05Gq0srUxkynU6yP7IOvct1zNQHgu1iIUYIJKhwwq_ECaZ2aRo&amp;usqp=CAU', FALSE, CURRENT_DATE, CURRENT_DATE);
+        </sql>
+    </changeSet>
+
+    <changeSet id="4" author="rodrigo.fischer">
+        <sql dbms="postgresql">
+            INSERT INTO POSTS (user_id, title, description, photo_link, video_link, private, created_at, updated_at)
+            VALUES
+                (1, 'Post Title 1', 'This is the description for the first post by Alice Johnson.', 'https://avatar.iran.liara.run/public', 'https://avatar.iran.liara.run/public', FALSE, CURRENT_DATE, CURRENT_DATE),
+                (1, 'Post Title 2', 'This is the description for the second post by Alice Johnson.', 'https://avatar.iran.liara.run/public', 'https://avatar.iran.liara.run/public', FALSE, CURRENT_DATE, CURRENT_DATE),
+                (2, 'Post Title 1', 'This is the description for the first post by Bob Smith.', 'https://avatar.iran.liara.run/public', 'https://avatar.iran.liara.run/public', FALSE, CURRENT_DATE, CURRENT_DATE),
+                (2, 'Post Title 2', 'This is the description for the second post by Bob Smith.', 'https://avatar.iran.liara.run/public', 'https://avatar.iran.liara.run/public', FALSE, CURRENT_DATE, CURRENT_DATE),
+                (3, 'Post Title 1', 'This is the description for the first post by Carol Williams.', 'https://avatar.iran.liara.run/public', 'https://avatar.iran.liara.run/public', FALSE, CURRENT_DATE, CURRENT_DATE),
+                (3, 'Post Title 2', 'This is the description for the second post by Carol Williams.', 'https://avatar.iran.liara.run/public', 'https://avatar.iran.liara.run/public', FALSE, CURRENT_DATE, CURRENT_DATE),
+                (4, 'Post Title 1', 'This is the description for the first post by David Brown.', 'https://avatar.iran.liara.run/public', 'https://avatar.iran.liara.run/public', FALSE, CURRENT_DATE, CURRENT_DATE),
+                (4, 'Post Title 2', 'This is the description for the second post by David Brown.', 'https://avatar.iran.liara.run/public', 'https://avatar.iran.liara.run/public', FALSE, CURRENT_DATE, CURRENT_DATE),
+                (5, 'Post Title 1', 'This is the description for the first post by Eva Green.', 'https://avatar.iran.liara.run/public', 'https://avatar.iran.liara.run/public', FALSE, CURRENT_DATE, CURRENT_DATE),
+                (5, 'Post Title 2', 'This is the description for the second post by Eva Green.', 'https://avatar.iran.liara.run/public', 'https://avatar.iran.liara.run/public', FALSE, CURRENT_DATE, CURRENT_DATE),
+                (6, 'Post Title 1', 'This is the description for the first post by Frank Harris.', 'https://avatar.iran.liara.run/public', 'https://avatar.iran.liara.run/public', FALSE, CURRENT_DATE, CURRENT_DATE),
+                (6, 'Post Title 2', 'This is the description for the second post by Frank Harris.', 'https://avatar.iran.liara.run/public', 'https://avatar.iran.liara.run/public', FALSE, CURRENT_DATE, CURRENT_DATE),
+                (7, 'Post Title 1', 'This is the description for the first post by Grace Lee.', 'https://avatar.iran.liara.run/public', 'https://avatar.iran.liara.run/public', FALSE, CURRENT_DATE, CURRENT_DATE),
+                (7, 'Post Title 2', 'This is the description for the second post by Grace Lee.', 'https://avatar.iran.liara.run/public', 'https://avatar.iran.liara.run/public', FALSE, CURRENT_DATE, CURRENT_DATE),
+                (8, 'Post Title 1', 'This is the description for the first post by Henry King.', 'https://avatar.iran.liara.run/public', 'https://avatar.iran.liara.run/public', FALSE, CURRENT_DATE, CURRENT_DATE),
+                (8, 'Post Title 2', 'This is the description for the second post by Henry King.', 'https://avatar.iran.liara.run/public', 'https://avatar.iran.liara.run/public', FALSE, CURRENT_DATE, CURRENT_DATE),
+                (9, 'Post Title 1', 'This is the description for the first post by Irene Taylor.', 'https://avatar.iran.liara.run/public', 'https://avatar.iran.liara.run/public', FALSE, CURRENT_DATE, CURRENT_DATE),
+                (9, 'Post Title 2', 'This is the description for the second post by Irene Taylor.', 'https://avatar.iran.liara.run/public', 'https://avatar.iran.liara.run/public', FALSE, CURRENT_DATE, CURRENT_DATE),
+                (10, 'Post Title 1', 'This is the description for the first post by Jack Wilson.', 'https://avatar.iran.liara.run/public', 'https://avatar.iran.liara.run/public', FALSE, CURRENT_DATE, CURRENT_DATE),
+                (10, 'Post Title 2', 'This is the description for the second post by Jack Wilson.', 'https://avatar.iran.liara.run/public', 'https://avatar.iran.liara.run/public', FALSE, CURRENT_DATE, CURRENT_DATE),
+                (11, 'Post Title 1', 'This is the description for the first post by Karen Scott.', 'https://avatar.iran.liara.run/public', 'https://avatar.iran.liara.run/public', FALSE, CURRENT_DATE, CURRENT_DATE),
+                (11, 'Post Title 2', 'This is the description for the second post by Karen Scott.', 'https://avatar.iran.liara.run/public', 'https://avatar.iran.liara.run/public', FALSE, CURRENT_DATE, CURRENT_DATE),
+                (12, 'Post Title 1', 'This is the description for the first post by Leo Adams.', 'https://avatar.iran.liara.run/public', 'https://avatar.iran.liara.run/public', FALSE, CURRENT_DATE, CURRENT_DATE),
+                (12, 'Post Title 2', 'This is the description for the second post by Leo Adams.', 'https://avatar.iran.liara.run/public', 'https://avatar.iran.liara.run/public', FALSE, CURRENT_DATE, CURRENT_DATE),
+                (13, 'Post Title 1', 'This is the description for the first post by Mia Robinson.', 'https://avatar.iran.liara.run/public', 'https://avatar.iran.liara.run/public', FALSE, CURRENT_DATE, CURRENT_DATE),
+                (13, 'Post Title 2', 'This is the description for the second post by Mia Robinson.', 'https://avatar.iran.liara.run/public', 'https://avatar.iran.liara.run/public', FALSE, CURRENT_DATE, CURRENT_DATE),
+                (14, 'Post Title 1', 'This is the description for the first post by Nina Martinez.', 'https://avatar.iran.liara.run/public', 'https://avatar.iran.liara.run/public', FALSE, CURRENT_DATE, CURRENT_DATE),
+                (14, 'Post Title 2', 'This is the description for the second post by Nina Martinez.', 'https://avatar.iran.liara.run/public', 'https://avatar.iran.liara.run/public', FALSE, CURRENT_DATE, CURRENT_DATE);
+        </sql>
+    </changeSet>
+</databaseChangeLog>
