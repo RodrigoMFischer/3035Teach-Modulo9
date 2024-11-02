@@ -14,9 +14,4 @@ Na sequência execute ```npm run dev```
 
 Obs.: É importante que o back-end já esteja sendo executado
 
----
 
-## Usuário Default em PRD (Banco Render)
-
-email: alice.johnson@example.com
-senha: @SuperSenha123
